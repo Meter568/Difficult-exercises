@@ -1,52 +1,108 @@
 /*         
-#1 Don't repeat more than n times
+#2 Sort animals by legs numbers and names
 
-Дан массив целых чисел и число n - количество допустимых повторений чисел.
-Необходимо создать новый массив, содержащий каждое число из исходного массива не более n
-раз, без изменения порядка исходных элементов.
+Нужно написать функцию, которая принимает массив объектов типа Animal и возвращает новый массив. Новый
+массив должен быть копией исходного массива, отсортированной сначала по количеству ног животного по
+убыванию, а затем по имени животного.
+Исходный массив не должен измениться
 
-Например, если число n равно 2, а входной список равен [1,2,3,1,2,1,2,3], то вернется
-массив [1,2,3,1,2,3].
+Пример массива с животными:
 
-Еще пример: дан массив [20,37,20,21] и число n = 1. Вернется массив [20,37,21].
+const animals = [
+    {
+        name: 'Cat',
+        legsNumber: 4
+    },
+    {
+        name: 'Dog',
+        legsNumber: 4
+    },
+    {
+        name: 'Eagle',
+        legsNumber: 2
+    },
+    {
+        name: 'Sparrow',
+        legsNumber: 2
+    },
+    {
+        name: 'Octopus',
+        legsNumber: 8
+    },
+    {
+        name: 'Centipede',
+        legsNumber: 40
+    },
+    {
+        name: 'Spider',
+        legsNumber: 6
+    },
+]
 
-Таким образом, функция должна принимать 2-а аргумента:
-    - массив целых чисел и
-    - целое число - количество допустимых повторений
-
-Она должна возвращать новый массив. Если передан пустой массив, то он и вернется.
-Если в массиве есть дробные числа, то они должны округляться до
-ближайшего меньшего целого.
-
-Решение должно быть оптимальным по алгоритму 
+Если в качестве аргумента передан пустой массив, программа должна вернуть пустой массив.
 */
 
 "use strict";
 
-function limitOccurrences(array, n) {
-    let resultArray = [];
-    if (array.length === 0) {
-        return resultArray;
+const animals = [
+    {
+        name: "Dog",
+        legsNumber: 4,
+    },
+    {
+        name: "Cat",
+        legsNumber: 4,
+    },
+    {
+        name: "Sparrow",
+        legsNumber: 2,
+    },
+    {
+        name: "Eagle",
+        legsNumber: 2,
+    },
+    {
+        name: "Octopus",
+        legsNumber: 8,
+    },
+    {
+        name: "Centipede",
+        legsNumber: 40,
+    },
+    {
+        name: "Spider",
+        legsNumber: 6,
+    },
+];
+
+function sortAnimals(animals) {
+    let sortedAnimals = [];
+    let isSwapped;
+
+    if (animals.length === 0) {
+        return sortedAnimals;
     }
 
-    const countNumber = {};
+    sortedAnimals = [...animals];
 
-    for (const number of array) {
-        const value = Math.floor(number);
+    do {
+        isSwapped = false;
+        for (let i = 0; i < sortedAnimals.length - 1; i++) {
+            if (sortedAnimals[i].legsNumber < sortedAnimals[i + 1].legsNumber) {
+                [sortedAnimals[i], sortedAnimals[i + 1]] = [sortedAnimals[i + 1], sortedAnimals[i]];
+                isSwapped = true;
+            }
+            if (sortedAnimals[i].legsNumber === sortedAnimals[i + 1].legsNumber) {
+                if (sortedAnimals[i].name.toUpperCase() > sortedAnimals[i + 1].name.toUpperCase()) {
+                    [sortedAnimals[i], sortedAnimals[i + 1]] = [sortedAnimals[i + 1], sortedAnimals[i]];
+                    isSwapped = true;
+                }
+            }
+        }
+    } while (isSwapped);
 
-        countNumber[value] ??= 0;
-
-        if (countNumber[value] === n) continue;
-
-        countNumber[value]++;
-        resultArray.push(value);
-    }
-
-    return resultArray;
+    return sortedAnimals;
 }
 
-const array = [1, 2, 3, 1, 2, 1, 2, 3];
-const n = 2;
-
-const result = limitOccurrences(array, n);
+const result = sortAnimals(animals);
 console.log(result);
