@@ -85,23 +85,12 @@ function sortAnimals(animals) {
 
     sortedAnimals = [...animals];
 
-    do {
-        isSwapped = false;
-        for (let i = 0; i < sortedAnimals.length - 1; i++) {
-            if (sortedAnimals[i].legsNumber < sortedAnimals[i + 1].legsNumber) {
-                [sortedAnimals[i], sortedAnimals[i + 1]] = [sortedAnimals[i + 1], sortedAnimals[i]];
-                isSwapped = true;
-            }
-            if (sortedAnimals[i].legsNumber === sortedAnimals[i + 1].legsNumber) {
-                if (sortedAnimals[i].name.toUpperCase() > sortedAnimals[i + 1].name.toUpperCase()) {
-                    [sortedAnimals[i], sortedAnimals[i + 1]] = [sortedAnimals[i + 1], sortedAnimals[i]];
-                    isSwapped = true;
-                }
-            }
+    return sortedAnimals.sort((a, b) => {
+        if (a.legsNumber === b.legsNumber) {
+            return a.name.localeCompare(b.name, "us");
         }
-    } while (isSwapped);
-
-    return sortedAnimals;
+        return b.legsNumber - a.legsNumber;
+    });
 }
 
 const result = sortAnimals(animals);
