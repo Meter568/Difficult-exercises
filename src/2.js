@@ -76,14 +76,10 @@ const animals = [
 ];
 
 function sortAnimals(animals) {
-    let sortedAnimals = [];
-    let isSwapped;
-
-    if (animals.length === 0) {
-        return sortedAnimals;
+    if (!animals) {
+        return [];
     }
-
-    sortedAnimals = [...animals];
+    const sortedAnimals = [...animals];
 
     return sortedAnimals.sort((a, b) => {
         if (a.legsNumber === b.legsNumber) {
